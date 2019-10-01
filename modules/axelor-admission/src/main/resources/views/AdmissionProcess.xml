@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.1.xsd">
+
+	<grid model="com.axelor.admission.db.AdmissionProcess" title="Admission Processess"
+		name="admission-process-grid">
+		<field name="name" />
+		<field name="fromDate" />
+		<field name="toDate" />
+	</grid>
+
+	<form model="com.axelor.admission.db.AdmissionProcess" title="Admission Process"
+		name="admission-process-form" width="large">
+		<panel title="Admission Process">
+			<field name="name" />
+			<field name="fromDate" onChange="action-admission-process-validate-from-date" />
+			<field name="toDate" onChange="action-admission-process-validate-to-date " />
+			<button name="completeAdmissionBtn" title="Complete Admission"
+				onClick="action-admission-process-method-set-college-selected" />
+		</panel>
+
+	</form>
+
+	<action-method name="action-admission-process-method-set-college-selected">
+		<call class="com.axelor.admission.web.AdmissionController"
+			method="setCollegeSelected" />
+	</action-method>
+
+	<action-validate name="action-admission-process-validate-from-date">
+		<error message="From Date is invalid"
+			if="eval: fromDate !=null &amp;&amp; fromDate &lt; toDate" action="action-admission-process-record-set-fromDate-null" />
+	</action-validate>
+	<action-record name="action-admission-process-record-set-fromDate-null"
+		model="com.axelor.admission.db.AdmissionProcess">
+		<field name="fromDate" expr="eval: null" />
+	</action-record>
+
+	<action-validate name="action-admission-process-validate-to-date">
+		<error message="To Date is invalid"
+			if="eval: toDate !=null &amp;&amp; toDate &lt; fromDate" action="action-admission-process-record-set-toDate-null" />
+	</action-validate>
+	<action-record name="action-admission-process-record-set-toDate-null"
+		model="com.axelor.admission.db.AdmissionProcess">
+		<field name="toDate" expr="eval: null" />
+	</action-record>
+
+
+</object-views>

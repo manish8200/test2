@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.1.xsd">
+
+	<menuitem title="Admissions" name="admissions.root" />
+	<menuitem title="Admission Entry" name="admission-admission-entry"
+		action="admission.root.admission.entry" parent="admissions.root" />
+
+	<action-view name="admission.root.admission.entry" model="com.axelor.admission.db.AdmissionEntry"
+		title="Admission Enrty">
+		<view type="grid" name="admission-entry-grid" />
+		<view type="form" name="admission-entry-form" />
+	</action-view>
+
+	<menuitem title="Admission Process" name="admission-admission-process"
+		action="admission.root.admission.process" parent="admissions.root" />
+	<action-view name="admission.root.admission.process" title="Admission Process"
+		model="com.axelor.admission.db.AdmissionProcess">
+		<view type="form" name="admission-process-form" />
+		<view type="grid" name="admission-process-grid" />
+	</action-view>
+
+
+	<menuitem title="College" name="admission.root.college" />
+	<menuitem title="College" name="admission.root.collegeg"
+		parent="admission.root.college" action="admission.root.college" />
+	<action-view name="admission.root.college" title="College"
+		model="com.axelor.admission.db.College">
+		<view type="grid" name="college-grid" />
+		<view type="form" name="college-form" />
+	</action-view>
+
+	<menuitem title="Faculty" name="admission-faculty" action="admission.root.faculty"
+		parent="admission.root.college" />
+	<action-view name="admission.root.faculty" title="Faculty"
+		model="com.axelor.admission.db.Faculty">
+		<view type="grid" name="faculty-grid" />
+		<view type="form" name="faculty-form" />
+	</action-view>
+
+</object-views>
