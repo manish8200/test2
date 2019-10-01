@@ -17,18 +17,18 @@
 		name="admission-entry-form" width="large">
 		<panel title="Admission Status" sidebar="true">
 			<button-group title="StatusButton">
-				<button name="Draft" title="Draft" onClick="action-admission-entry-attrs-set-button-status-draft" />
+				<button name="Draft" title="Draft" onClick="action-admission-entry-attrs-set-button-status-draft" hideIf="status == '1'" />
 				<button name="confirmed" title="Confirmed"
 					onClick="save,action-admission-entry-attrs-set-button-status-confirmed" />
 				<button name="admitted" title="Admitted"
-					onClick="save,action-admission-entry-attrs-set-button-status-admitted" />
+					onClick="save,action-admission-entry-attrs-set-button-status-admitted" hideIf="status == '1' || status == '2'" />
 				<button name="canceled" title="Canceled"
-					onClick="save,action-admission-entry-attrs-set-button-status-cancel" />
+					onClick="save,action-admission-entry-attrs-set-button-status-cancel" hideIf="status == '3'" />
 			</button-group>
 		</panel>
 		<panel title="Admission Entry">
 			<field name="status" selection="admission.entry.status.button.selection" widget="NavSelect"
-				colSpan="8" />
+				colSpan="8" readonly="true" />
 			<field name="candidate" />
 			<field name="registrationDate" />
 			<field name="faculty" />
