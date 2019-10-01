@@ -17,18 +17,23 @@
 		name="admission-entry-form" width="large">
 		<panel title="Admission Status" sidebar="true">
 			<button-group title="StatusButton">
-				<button name="Draft" title="Draft" onClick="action-admission-entry-attrs-set-button-status-draft" hideIf="status == '1'" />
+				<button name="resetToDraft" title="Reset to Draft"
+					onClick="action-admission-entry-attrs-set-button-status-draft,action-admission-entry-record-reset-colleglist-onclick-reset-to-draft"
+					hideIf="status == '1'" />
 				<button name="confirmed" title="Confirmed"
-					onClick="save,action-admission-entry-attrs-set-button-status-confirmed" />
+					onClick="save,action-admission-entry-attrs-set-button-status-confirmed,action-admission-entry-validate-admission-entry-information"
+					hideIf="status == '3'" />
 				<button name="admitted" title="Admitted"
-					onClick="save,action-admission-entry-attrs-set-button-status-admitted" hideIf="status == '1' || status == '2'" />
+					onClick="save,action-admission-entry-attrs-set-button-status-admitted"
+					hideIf="status == '1' || status == '2'" />
 				<button name="canceled" title="Canceled"
-					onClick="save,action-admission-entry-attrs-set-button-status-cancel" hideIf="status == '3'" />
+					onClick="save,action-admission-entry-attrs-set-button-status-cancel"
+					hideIf="status == '3'" />
 			</button-group>
 		</panel>
 		<panel title="Admission Entry">
-			<field name="status" selection="admission.entry.status.button.selection" widget="NavSelect"
-				colSpan="8" readonly="true" />
+			<field name="status" selection="admission.entry.status.button.selection"
+				widget="NavSelect" colSpan="8" readonly="true" />
 			<field name="candidate" />
 			<field name="registrationDate" />
 			<field name="faculty" />
@@ -37,8 +42,8 @@
 
 		<panel title="CollegeSelection">
 			<field name="collegeList" readonlyIf="status == '2' || status == '3' || status == '4'" />
-			<field name="validationDate" showIf= "status == '3'" />
-			<field name="collegeSelected" showIf= "status == '3'" />
+			<field name="validationDate" showIf="status == '3'" />
+			<field name="collegeSelected" showIf="status == '3'" />
 		</panel>
 	</form>
 
@@ -49,6 +54,22 @@
 		<option value="4">Canceled</option>
 	</selection>
 
+	<action-validate
+		name="action-admission-entry-validate-admission-entry-information">
+		<error message="Fill Admission Form"
+			if="collegeList == null || candidate == null || registrationDate == null || faculty == null"
+			action="action-admission-entry-attrs-reset-status-to-draft" />
+	</action-validate>
+	<action-attrs name="action-admission-entry-attrs-reset-status-to-draft">
+		<attribute name="value" for="status" expr="1" />
+	</action-attrs>
+
+	<action-record
+		name="action-admission-entry-record-reset-colleglist-onclick-reset-to-draft"
+		model="com.axelor.admission.db.AdmissionEntry">
+		<field name="collegeList" expr="eval: null" />
+	</action-record>
+
 	<action-attrs name="action-admission-entry-attrs-set-button-status-cancel">
 		<attribute name="value" for="status" expr="4" />
 	</action-attrs>
@@ -57,7 +78,8 @@
 		<attribute name="value" for="status" expr="3" />
 	</action-attrs>
 
-	<action-attrs name="action-admission-entry-attrs-set-button-status-confirmed">
+	<action-attrs
+		name="action-admission-entry-attrs-set-button-status-confirmed">
 		<attribute name="value" for="status" expr="2" />
 	</action-attrs>
 
