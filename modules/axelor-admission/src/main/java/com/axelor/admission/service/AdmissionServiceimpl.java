@@ -15,7 +15,7 @@ import com.google.inject.Inject;
 public class AdmissionServiceimpl implements AdmissionService {
 
 	@Inject
-	AdmissionEntryRepository repo;
+	AdmissionEntryRepository admissionEntryRepo;
 	@Inject
 	FacultyEntryRepository facultyrepo;
 
@@ -54,7 +54,7 @@ public class AdmissionServiceimpl implements AdmissionService {
 						admissionEntry.setStatus(4);
 					}
 				}
-				repo.save(admissionEntry);
+				admissionEntryRepo.save(admissionEntry);
 				message = "College Allocated Sucessfully...";
 			}
 		}
