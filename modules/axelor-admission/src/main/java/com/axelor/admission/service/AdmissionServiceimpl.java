@@ -26,7 +26,7 @@ public class AdmissionServiceimpl implements AdmissionService {
 /*		LocalDate toDate = admissionProcess.getToDate();
 		LocalDate fromDate = admissionProcess.getFromDate();
 		Integer duration = Period.between(fromDate, toDate).getDays();*/
-		Integer seats = null;
+		Integer seats = 0;
 		Integer seq;
 		List<AdmissionEntry> admissionEntriesList = Beans.get(AdmissionEntryRepository.class).all()
 				.filter("self.status = '2' ").fetch();
@@ -38,10 +38,10 @@ public class AdmissionServiceimpl implements AdmissionService {
 			for (CollegeEntry collegeEntry : collegeList) {
 				List<FacultyEntry> facultyEntryList = collegeEntry.getCollege().getFacultiesList();
 				for (FacultyEntry facultyEntry : facultyEntryList) {
-					if (admissionEntry.getFaculty() == facultyEntry.getFaculty() && facultyEntry.getSeats() != null) {
+					if (admissionEntry.getFaculty() == facultyEntry.getFaculty() && facultyEntry.getSeats() != 0) {
 						seats = facultyEntry.getSeats();
-						Integer i = facultyEntry.getSeats() - 1;
-						facultyEntry.setSeats(i);
+						Integer avaliableSeats = facultyEntry.getSeats() - 1;
+						facultyEntry.setSeats(avaliableSeats);
 						facultyrepo.save(facultyEntry);
 					}
 					seq = collegeEntry.getSequence();
