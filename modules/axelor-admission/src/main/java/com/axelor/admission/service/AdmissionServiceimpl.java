@@ -39,9 +39,10 @@ public class AdmissionServiceimpl implements AdmissionService {
 				List<FacultyEntry> facultyEntryList = collegeEntry.getCollege().getFacultiesList();
 				for (FacultyEntry facultyEntry : facultyEntryList) {
 					if (admissionEntry.getFaculty() == facultyEntry.getFaculty() && facultyEntry.getSeats() != 0) {
-						seats = facultyEntry.getSeats();
+						
 						Integer avaliableSeats = facultyEntry.getSeats() - 1;
 						facultyEntry.setSeats(avaliableSeats);
+						seats = facultyEntry.getSeats();
 						facultyrepo.save(facultyEntry);
 					}
 					seq = collegeEntry.getSequence();
